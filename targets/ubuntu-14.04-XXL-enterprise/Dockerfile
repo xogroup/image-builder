@@ -36,8 +36,18 @@ RUN circleci-install firefox && circleci-install chrome && circleci-install phan
 ADD circleci-provision-scripts/android-sdk.sh /opt/circleci-provision-scripts/android-sdk.sh
 RUN circleci-install android_sdk platform-tools
 RUN circleci-install android_sdk extra-android-support
+RUN circleci-install android_sdk android-25
+RUN circleci-install android_sdk android-24
 RUN circleci-install android_sdk android-23
 RUN circleci-install android_sdk android-22
+RUN circleci-install android_sdk sys-img-armeabi-v7a-android-24
+RUN circleci-install android_sdk sys-img-armeabi-v7a-android-22
+RUN circleci-install android_sdk build-tools-25.0.1
+RUN circleci-install android_sdk build-tools-25.0.0
+RUN circleci-install android_sdk build-tools-24.0.3
+RUN circleci-install android_sdk build-tools-24.0.2
+RUN circleci-install android_sdk build-tools-24.0.1
+RUN circleci-install android_sdk build-tools-24.0.0
 RUN circleci-install android_sdk build-tools-23.0.3
 RUN circleci-install android_sdk build-tools-23.0.2
 RUN circleci-install android_sdk build-tools-22.0.1

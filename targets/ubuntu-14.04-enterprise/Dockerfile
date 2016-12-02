@@ -45,9 +45,6 @@ ARG use_precompile=true
 ENV USE_PRECOMPILE=$use_precompile RUN_APT_UPDATE=true
 RUN curl -s https://packagecloud.io/install/repositories/circleci/trusty/script.deb.sh | sudo bash
 ADD circleci-provision-scripts/python.sh /opt/circleci-provision-scripts/python.sh
-RUN circleci-install python 2.7.6
-RUN circleci-install python 2.7.3
-RUN circleci-install python 2.7.9
 RUN circleci-install python 2.7.10
 RUN circleci-install python 2.7.11
 RUN circleci-install python 3.4.3
@@ -82,10 +79,6 @@ RUN circleci-install ruby 2.3.1
 RUN sudo -H -i -u ubuntu rvm use 2.2.4 --default
 
 ADD circleci-provision-scripts/php.sh /opt/circleci-provision-scripts/php.sh
-RUN circleci-install php 5.5.9
-RUN circleci-install php 5.5.11
-RUN circleci-install php 5.6.5
-RUN circleci-install php 5.6.14
 RUN circleci-install php 5.6.17
 RUN circleci-install php 7.0.4
 RUN sudo -H -i -u ubuntu phpenv global 5.6.17

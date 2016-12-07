@@ -1,3 +1,4 @@
+
 FROM circleci/ubuntu-server:trusty-latest
 
 ENV VERBOSE true
@@ -36,10 +37,6 @@ RUN circleci-install firefox && circleci-install chrome && circleci-install phan
 ADD circleci-provision-scripts/qt.sh /opt/circleci-provision-scripts/qt.sh
 RUN circleci-install qt
 
-# Install deployment tools
-ADD circleci-provision-scripts/awscli.sh circleci-provision-scripts/gcloud.sh circleci-provision-scripts/heroku.sh /opt/circleci-provision-scripts/
-RUN for package in awscli gcloud heroku; do circleci-install $package; done
-
 # Languages
 ARG use_precompile=true
 ENV USE_PRECOMPILE=$use_precompile RUN_APT_UPDATE=true
@@ -62,7 +59,7 @@ RUN circleci-install nodejs 6.2.0
 RUN circleci-install nodejs 6.2.2
 RUN circleci-install nodejs 6.3.0
 RUN circleci-install nodejs 6.3.1
-RUN sudo -H -i -u ubuntu nvm alias default 4.2.6
+RUN sudo -H -i -u ubuntu nvm alias default 6.1.0
 
 ADD circleci-provision-scripts/go.sh /opt/circleci-provision-scripts/go.sh
 RUN circleci-install golang 1.6.2
@@ -91,6 +88,10 @@ RUN circleci-install scala
 
 ADD circleci-provision-scripts/docker.sh /opt/circleci-provision-scripts/docker.sh
 RUN circleci-install docker && circleci-install docker_compose
+
+# Install deployment tools
+ADD circleci-provision-scripts/awscli.sh circleci-provision-scripts/awsebcli.sh circleci-provision-scripts/gcloud.sh circleci-provision-scripts/heroku.sh /opt/circleci-provision-scripts/
+RUN for package in awscli awsebcli gcloud heroku; do circleci-install $package; done
 
 # Undivert upstart
 # You shouldn't change the line unless you understad the consequence

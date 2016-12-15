@@ -9,6 +9,7 @@ function install_pyenv() {
 
     # Installing system pip because sometimes our app uses `pyenv global system`. e.g. CodeDeploy
     apt-get install python-pip
+    apt-get install -y python-dev
 
     echo 'Installing pyenv'
     (cat <<'EOF'

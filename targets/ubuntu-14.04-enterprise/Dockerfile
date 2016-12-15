@@ -1,3 +1,4 @@
+
 FROM circleci/ubuntu-server:trusty-latest
 
 ENV VERBOSE true
@@ -32,13 +33,9 @@ RUN for s in apache2 memcached rabbitmq-server neo4j neo4j-service elasticsearch
 ADD circleci-provision-scripts/firefox.sh circleci-provision-scripts/chrome.sh circleci-provision-scripts/phantomjs.sh /opt/circleci-provision-scripts/
 RUN circleci-install firefox && circleci-install chrome && circleci-install phantomjs
 
-# Qt
-ADD circleci-provision-scripts/qt.sh /opt/circleci-provision-scripts/qt.sh
-RUN circleci-install qt
-
-# Install deployment tools
-ADD circleci-provision-scripts/awscli.sh circleci-provision-scripts/gcloud.sh circleci-provision-scripts/heroku.sh /opt/circleci-provision-scripts/
-RUN for package in awscli gcloud heroku; do circleci-install $package; done
+# # Qt
+# ADD circleci-provision-scripts/qt.sh /opt/circleci-provision-scripts/qt.sh
+# RUN circleci-install qt
 
 # Languages
 ARG use_precompile=true
@@ -52,16 +49,21 @@ RUN circleci-install python 3.5.1
 RUN sudo -H -i -u ubuntu pyenv global 2.7.11
 
 ADD circleci-provision-scripts/nodejs.sh /opt/circleci-provision-scripts/nodejs.sh
-RUN circleci-install nodejs 4.2.6
 RUN circleci-install nodejs 5.5.0
 RUN circleci-install nodejs 6.1.0
-RUN sudo -H -i -u ubuntu nvm alias default 4.2.6
-RUN circleci-install yarn 0.18.1
+RUN circleci-install nodejs 6.2.0
+RUN circleci-install nodejs 6.2.2
+RUN circleci-install nodejs 6.3.0
+RUN circleci-install nodejs 6.3.1
+RUN sudo -H -i -u ubuntu nvm alias default 6.1.0
 
 ADD circleci-provision-scripts/go.sh /opt/circleci-provision-scripts/go.sh
 RUN circleci-install golang 1.6.2
 
 ADD circleci-provision-scripts/ruby.sh /opt/circleci-provision-scripts/ruby.sh
+RUN circleci-install ruby 2.2.0
+RUN circleci-install ruby 2.2.2
+RUN circleci-install ruby 2.2.3
 RUN circleci-install ruby 2.2.4
 RUN circleci-install ruby 2.3.0
 RUN circleci-install ruby 2.3.1
@@ -72,14 +74,18 @@ RUN circleci-install php 5.6.17
 RUN circleci-install php 7.0.4
 RUN sudo -H -i -u ubuntu phpenv global 5.6.17
 
-ADD circleci-provision-scripts/clojure.sh /opt/circleci-provision-scripts/clojure.sh
-RUN circleci-install clojure
+# ADD circleci-provision-scripts/clojure.sh /opt/circleci-provision-scripts/clojure.sh
+# RUN circleci-install clojure
 
-ADD circleci-provision-scripts/scala.sh /opt/circleci-provision-scripts/scala.sh
-RUN circleci-install scala
+# ADD circleci-provision-scripts/scala.sh /opt/circleci-provision-scripts/scala.sh
+# RUN circleci-install scala
 
 ADD circleci-provision-scripts/docker.sh /opt/circleci-provision-scripts/docker.sh
 RUN circleci-install docker && circleci-install docker_compose
+
+# Install deployment tools
+ADD circleci-provision-scripts/awscli.sh circleci-provision-scripts/awsebcli.sh circleci-provision-scripts/gcloud.sh circleci-provision-scripts/heroku.sh /opt/circleci-provision-scripts/
+RUN for package in awscli awsebcli gcloud heroku; do circleci-install $package; done
 
 # Undivert upstart
 # You shouldn't change the line unless you understad the consequence

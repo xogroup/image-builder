@@ -38,7 +38,7 @@ sudo service docker restart
 echo "--------------------------------------"
 echo "        Authenticating ECR	    "
 echo "--------------------------------------"
-echo $(/usr/local/bin/aws ecr get-login --no-include-email --region us-east-1)
+eval $(/usr/local/bin/aws ecr get-login --no-include-email --region us-east-1)
 
 echo "-------------------------------------------"
 echo "      Pulling Server Builder Image"
